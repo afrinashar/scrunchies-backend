@@ -24,7 +24,7 @@ const port = process.env.PORT|| 8000
 const allowedOrigins = new Set([
   process.env.CLIENT_ORIGIN,
   'http://localhost:5173',
-  'http://localhost:4173'
+  'https://tuktails.vercel.app/'
 ].filter(Boolean))
 
 app.disable('x-powered-by')
