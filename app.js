@@ -22,16 +22,19 @@ mongoose.connect(process.env.MONGODB_URL, {
 const port = process.env.PORT|| 8000
 
 const allowedOrigins = new Set([
-  process.env.CLIENT_ORIGIN,
+  ...(process.env.CLIENT_ORIGIN || '').split(','),
+  ...(process.env.CLIENT_ORIGINS || '').split(','),
   'http://localhost:5173',
-  'https://tuktails.vercel.app/'
-].filter(Boolean))
+  'http://localhost:5174',
+  'http://localhost:5175',
+  'https://tuktails.vercel.app'
+].map((origin) => origin.trim().replace(/\/+$/, '')).filter(Boolean))
 
 app.disable('x-powered-by')
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.has(origin)) return callback(null, true)
+    if (!origin || allowedOrigins.has(origin.replace(/\/+$/, ''))) return callback(null, true)
     return callback(new Error('Origin not allowed'))
   }
 }))
