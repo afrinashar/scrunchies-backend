@@ -5,6 +5,7 @@ const userRouter = require('./routers/user')
 const itemRouter =require('./routers/item')
 const cartRouter = require('./routers/cart')
 const orderRouter = require('./routers/order')
+const feedbackRouter = require('./routers/feedback')
 const authRouters = require('./routers/auth')
 const helmet = require('helmet')
 const { rateLimit } = require('express-rate-limit')
@@ -43,6 +44,13 @@ app.use('/orders', rateLimit({
   legacyHeaders: false,
   message: { message: 'Too many order attempts. Please try again in 15 minutes.' }
 }))
+app.use('/feedback', rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { message: 'Too many feedback submissions. Please try again in 15 minutes.' }
+}))
 app.use('/admin', rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 20,
@@ -62,6 +70,7 @@ app.use(itemRouter)
 app.use(cartRouter)
 app.use(authRouters)
 app.use(orderRouter)
+app.use(feedbackRouter)
 
 app.use((error, req, res, next) => {
   if (res.headersSent) return next(error)

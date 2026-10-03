@@ -43,6 +43,7 @@ router.post('/orders', async (req, res) => {
                 productId: product._id,
                 name: product.name,
                 category: product.category,
+                subcategory: product.subcategory,
                 price: product.price,
                 quantity
             }
@@ -66,6 +67,8 @@ router.post('/orders', async (req, res) => {
         return res.status(500).send({ message: 'We could not place your order. Please try again.' })
     }
 })
+
+router.get('/admin/access', requireAdmin, (req, res) => res.status(204).end())
 
 router.get('/admin/orders', requireAdmin, async (req, res) => {
     try {

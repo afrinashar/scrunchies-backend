@@ -10,7 +10,7 @@ const itemSchema = new mongoose.Schema({
     name: {
        type: String,
        required: false,
-       trim: false
+       trim: true
     },
     description: {
       type: String,
@@ -20,6 +20,19 @@ const itemSchema = new mongoose.Schema({
        type: String,
        required: false
     },
+    subcategory: {
+       type: String,
+       required: false,
+       trim: true
+    },
+    isFeatured: {
+       type: Boolean,
+       default: false
+    },
+    isUpcoming: {
+       type: Boolean,
+       default: false
+    },
     price: {
        type: Number,
        required: false
@@ -27,6 +40,12 @@ const itemSchema = new mongoose.Schema({
     photo: {
       type: String,
       required: false
+    },
+      videoUrl: {
+         type: String,
+         trim: true,
+         maxlength: 500,
+         required: false
    }
     }, {
     timestamps: false

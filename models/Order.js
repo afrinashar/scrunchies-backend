@@ -4,6 +4,7 @@ const orderItemSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
   name: { type: String, required: true, trim: true },
   category: { type: String, default: '' },
+  subcategory: { type: String, default: '' },
   price: { type: Number, required: true, min: 0 },
   quantity: { type: Number, required: true, min: 1, max: 10 }
 }, { _id: false })
